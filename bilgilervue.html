@@ -1,34 +1,39 @@
-<!-- bilgiler.html -->
-
 <!DOCTYPE html>
-<html lang="tr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bilgiler</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <meta charset="UTF-8">
+  <title>Bilgiler</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
-    <div id="app">
-        <p>İsim: {{ name }}</p>
-        <p>Email: {{ email }}</p>
-    </div>
+  <div id="app">
+    <h2>Gönderilen Bilgiler</h2>
+    <p><strong>İsim:</strong> {{ name }}</p>
+    <p><strong>Email:</strong> {{ email }}</p>
+    <p><strong>Cinsiyet:</strong> {{ gender }}</p>
+    <p><strong>Seçilen:</strong> {{ selected }}</p>
+    <p><strong>Kabul Durumu:</strong> {{ accepted ? 'Kabul Edildi' : 'Kabul Edilmedi' }}</p>
+  </div>
 
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                name: '',
-                email: ''
-            },
-            mounted() {
-                // URL'den parametreleri al
-                const urlParams = new URLSearchParams(window.location.search);
-                // Formdan gelen parametreleri data değişkenlerine ata
-                this.name = urlParams.get('name');
-                this.email = urlParams.get('email');
-            }
-        });
-    </script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        name: '',
+        email: '',
+        gender: '',
+        selected: '',
+        accepted: false
+      },
+      mounted() {
+        const params = new URLSearchParams(window.location.search);
+        this.name = params.get('name');
+        this.email = params.get('email');
+        this.gender = params.get('gender');
+        this.selected = params.get('selected');
+        this.accepted = params.get('accepted') === 'true';
+      }
+    });
+  </script>
 </body>
 </html>
