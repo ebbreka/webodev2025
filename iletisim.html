@@ -85,6 +85,15 @@
     </form>
   </div>
   <!-- Form Bitiş -->
+   <div v-if="formData.submitted" class="mt-4">
+  <h3>Girilen Bilgiler</h3>
+  <p><strong>İsim-Soyisim:</strong> {{ formData.name }}</p>
+  <p><strong>E-posta:</strong> {{ formData.email }}</p>
+  <p><strong>Cinsiyet:</strong> {{ formData.gender }}</p>
+  <p><strong>Eğitim Durumu:</strong> {{ formData.education }}</p>
+  <p><strong>Kabul Edildi mi?:</strong> {{ formData.accepted ? 'Evet' : 'Hayır' }}</p>
+</div>
+
 
   <script src="iletisim.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -94,48 +103,48 @@
   new Vue({
     el: '#app',
     data: {
-      formData: {
-        name: '',
-        email: '',
-        accepted: false
-      }
+   formData: {
+  name: '',
+  email: '',
+  gender: '',
+  education: '',
+  accepted: false,
+  submitted: false // ek olarak form gönderildi mi
+}
+
     },
     methods: {
       validateFormJavaScript() {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (!emailPattern.test(this.formData.email)) {
-          alert('Geçerli bir e-posta adresi giriniz.');
-          return;
-        }
+  if (!emailPattern.test(this.formData.email)) {
+    alert('Geçerli bir e-posta adresi giriniz.');
+    return;
+  }
 
-        if (this.formData.name.trim() === '') {
-          alert('İsim alanı boş bırakılamaz.');
-          return;
-        }
+  if (this.formData.name.trim() === '') {
+    alert('İsim alanı boş bırakılamaz.');
+    return;
+  }
 
-        if (!this.formData.accepted) {
-          alert('Lütfen şartları kabul edin.');
-          return;
-        }
+  if (this.formData.gender === '') {
+    alert('Lütfen cinsiyet seçiniz.');
+    return;
+  }
 
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = 'iletisim.php';
+  if (this.formData.education === '') {
+    alert('Lütfen eğitim durumu seçiniz.');
+    return;
+  }
 
-        for (const key in this.formData) {
-          if (this.formData.hasOwnProperty(key)) {
-            const hiddenField = document.createElement('input');
-            hiddenField.type = 'hidden';
-            hiddenField.name = key;
-            hiddenField.value = this.formData[key];
-            form.appendChild(hiddenField);
-          }
-        }
+  if (!this.formData.accepted) {
+    alert('Lütfen şartları kabul edin.');
+    return;
+  }
 
-        document.body.appendChild(form);
-        form.submit();
-      }
+  this.formData.submitted = true; // Ekranda gösterilmesini sağlar
+}
+
     }
   });
 </script>
