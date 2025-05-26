@@ -93,35 +93,44 @@
       },
       methods: {
         validateFormJavaScript() {
-          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-          if (!emailPattern.test(this.formData.email)) {
-            alert('Geçerli bir e-posta adresi giriniz.');
-            return;
-          }
+  if (!emailPattern.test(this.formData.email)) {
+    alert('Geçerli bir e-posta adresi giriniz.');
+    return;
+  }
 
-          if (this.formData.name.trim() === '') {
-            alert('İsim alanı boş bırakılamaz.');
-            return;
-          }
+  if (this.formData.name.trim() === '') {
+    alert('İsim alanı boş bırakılamaz.');
+    return;
+  }
 
-          if (this.formData.gender === '') {
-            alert('Lütfen cinsiyet seçiniz.');
-            return;
-          }
+  if (this.formData.gender === '') {
+    alert('Lütfen cinsiyet seçiniz.');
+    return;
+  }
 
-          if (this.formData.education === '') {
-            alert('Lütfen eğitim durumu seçiniz.');
-            return;
-          }
+  if (this.formData.education === '') {
+    alert('Lütfen eğitim durumu seçiniz.');
+    return;
+  }
 
-          if (!this.formData.accepted) {
-            alert('Lütfen şartları kabul edin.');
-            return;
-          }
+  if (!this.formData.accepted) {
+    alert('Lütfen şartları kabul edin.');
+    return;
+  }
 
-          this.formData.submitted = true;
-        }
+  // URL'ye veri ekleyip yeni sayfaya git
+  const params = new URLSearchParams();
+  params.append('name', this.formData.name);
+  params.append('email', this.formData.email);
+  params.append('gender', this.formData.gender);
+  params.append('education', this.formData.education);
+  params.append('accepted', this.formData.accepted ? 'Evet' : 'Hayır');
+
+  window.location.href = 'display.html?' + params.toString();
+}
+      
       }
     });
   </script>
